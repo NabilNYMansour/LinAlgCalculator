@@ -1,4 +1,4 @@
-import { Hidden, useMediaQuery } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import "./App.css";
 import { Calculator } from "./components/calculator";
