@@ -1,38 +1,107 @@
-.App {
-  text-align: center;
+/* Chrome, Safari, Edge, Opera */
+html,
+body,
+#app,
+#app > div {
+  height: 100%;
+  font-size: 1em;
+}
+#root {
+  overflow-y: hidden;
+  height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.opnav {
+  background-color: brown;
+  min-height: calc(100vh - 21px);
+  overflow-x: hidden;
+  animation-duration: 0.5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  top: 21px;
+  position: relative;
+}
+
+.historynav {
+  background-color: yellow;
+  min-height: calc(100vh - 21px);
+  overflow-x: hidden;
+  animation-duration: 0.5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  top: 21px;
+  position: fixed;
+  right: 0;
+}
+
+.topnav {
+  position: fixed;
+  width: 100vw;
+}
+
+.calculator {
+  margin-top: 21px;
+  flex-grow: 1;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
+@keyframes sidenavOpenAnimation {
   from {
-    transform: rotate(0deg);
+    width: 0%;
   }
   to {
-    transform: rotate(360deg);
+    width: 25%;
+  }
+}
+
+@keyframes sidenavCloseAnimation {
+  from {
+    width: 25%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .opnav {
+    top: 21px;
+    position: fixed;
+  }
+
+  #root {
+    overflow-y: scroll;
+  }
+
+  @keyframes sidenavOpenAnimation {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 80%;
+    }
+  }
+
+  @keyframes sidenavCloseAnimation {
+    from {
+      width: 80%;
+    }
+    to {
+      width: 0%;
+    }
   }
 }
