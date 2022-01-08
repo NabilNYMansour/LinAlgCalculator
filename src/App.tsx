@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
     isPhone && opnavHide && historynavHide && setHistorynavHide(false);
-  }, [isPhone]);
+  }, [isPhone, opnavHide, historynavHide]);
 
   return (
     <div
@@ -38,10 +38,7 @@ function App() {
         >
           Longest possible word 1
         </div>
-        <div
-          style={{ overflowY: isPhone ? "visible" : "scroll" }}
-          className="calculator"
-        >
+        <div className="calculator">
           <div style={{ flexGrow: "1" }}>
             <Calculator />
           </div>
@@ -63,26 +60,43 @@ function App() {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
-          backgroundColor: "aqua",
+          color: "#11270B",
+          backgroundColor: "#71B340",
+          alignItems: "center",
+          fontSize: isPhone ? "0.75em" : "1.5em",
         }}
         className="topnav"
       >
         <button
+          className="topnavbutton"
           onClick={() => {
             isPhone && setHistorynavHide(false);
             setOpnavHide(!opnavHide);
           }}
         >
-          Select OP
+          <div>
+            <div className={opnavHide ? "change1" : "bar"}></div>
+            <div className={opnavHide ? "change2" : "bar"}></div>
+            <div className={opnavHide ? "change3" : "bar"}></div>
+          </div>
+          <div style={{ paddingLeft: "10px" }}>Select OP</div>
         </button>
-        <div>Linear Alegbra Calculator</div>
+        <div>
+          {isPhone ? "Lin Alg Calculator" : "Linear Algebra Calculator"}{" "}
+        </div>
         <button
+          className="topnavbutton"
           onClick={() => {
             isPhone && setOpnavHide(false);
             setHistorynavHide(!historynavHide);
           }}
         >
-          History
+          <div style={{ paddingRight: "10px" }}>History</div>
+          <div>
+            <div className={historynavHide ? "change1" : "bar"}/>
+            <div className={historynavHide ? "change2" : "bar"}/>
+            <div className={historynavHide ? "change3" : "bar"}/>
+          </div>
         </button>
       </div>
     </div>

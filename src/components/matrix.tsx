@@ -113,11 +113,9 @@ export const Matrix = ({
     : [];
 
   return (
-    <div
-    style={{ padding:"10px", }}
-    >
-      <div style={{ padding:"5px"}}>
-      {vals.map((item, i) => (
+    <div style={{ padding: "10px" }}>
+      <div style={{ padding: "5px" }}>
+        {vals.map((item, i) => (
           <div style={{ display: "flex", justifyContent: "center" }} key={i}>
             {item.map((num, j) => (
               <span key={j}>
@@ -136,23 +134,35 @@ export const Matrix = ({
               </span>
             ))}
           </div>
-      ))}
+        ))}
       </div>
       {isInput && (
-        <button disabled={isDisabled} onClick={() => updateVals(vals.map((item) => item.fill("")))}>
+        <button
+          disabled={isDisabled}
+          onClick={() => updateVals(vals.map((item) => item.fill("")))}
+        >
           Clear
         </button>
       )}
       {isInput && (
-        <button disabled={isDisabled} onClick={() => updateVals(vals.map((item) => item.fill("0")))}>
+        <button
+          style={{ margin: "2px" }}
+          disabled={isDisabled}
+          onClick={() => updateVals(vals.map((item) => item.fill("0")))}
+        >
           Zeros
         </button>
       )}
-      {isInput && <button disabled={isDisabled} onClick={() => makeIdentity()}>Identity</button>}
+      {isInput && (
+        <button disabled={isDisabled} onClick={() => makeIdentity()}>
+          Identity
+        </button>
+      )}
       {isInput && (
         <div>
           <button
-          disabled={isDisabled}
+          style={{ marginRight: "2px" }}
+            disabled={isDisabled}
             onClick={() => {
               fillEmpty(fillChar);
             }}

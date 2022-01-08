@@ -4,11 +4,15 @@ body,
 #app,
 #app > div {
   height: 100%;
-  font-size: 1em;
-}
-#root {
   overflow-y: hidden;
+  background-color: #3c5a14;
+}
+
+#root {
+  overflow-y: auto;
   height: 100%;
+  font-family: "Courier New", Courier, monospace;
+  color: #71B340;
 }
 
 input::-webkit-outer-spin-button,
@@ -23,24 +27,24 @@ input[type="number"] {
 }
 
 .opnav {
-  background-color: brown;
-  min-height: calc(100vh - 21px);
+  background-color: #11270b;
+  min-height: calc(100vh - 32px);
   overflow-x: hidden;
   animation-duration: 0.5s;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  top: 21px;
-  position: relative;
+  top: 32px;
+  position: fixed;
 }
 
 .historynav {
-  background-color: yellow;
-  min-height: calc(100vh - 21px);
+  background-color: #11270b;
+  min-height: calc(100vh - 32px);
   overflow-x: hidden;
   animation-duration: 0.5s;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  top: 21px;
+  top: 32px;
   position: fixed;
   right: 0;
 }
@@ -51,12 +55,82 @@ input[type="number"] {
 }
 
 .calculator {
-  margin-top: 21px;
+  margin-top: 32px;
   flex-grow: 1;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+button,
+input {
+  font-family: "Courier New", Courier, monospace;
+  background-color: #669D31;
+  border:none;
+  font-size: 1em;
+}
+
+input {
+  font-size: 1em;
+  color: #11270B;
+}
+
+input:hover, button:hover {
+  background-color: #71B340;
+}
+
+input:disabled, button:disabled {
+  background-color: #598B2C;
+}
+
+.bar {
+  width: 20px;
+  height: 2px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.change1 {
+  width: 20px;
+  height: 2px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+  -webkit-transform: translate(0px, 8px);
+  transform: translate(0px, 8px);
+}
+
+.change2 {
+  width: 20px;
+  height: 2px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+  opacity: 0;
+}
+
+.change3 {
+  width: 20px;
+  height: 2px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+  -webkit-transform: translate(0px, -8px);
+  transform: translate(0px, -8px);
+}
+
+.topnavbutton {
+  background-color: #71b340;
+  display: flex;
+  justify-content: "space-between";
+  align-items: center;
+  border: none;
+  font-size: medium;
+}
+
+.topnavbutton:hover {
+  background-color: #669d31;
 }
 
 @keyframes sidenavOpenAnimation {
@@ -78,13 +152,8 @@ input[type="number"] {
 }
 
 @media screen and (max-width: 600px) {
-  .opnav {
-    top: 21px;
-    position: fixed;
-  }
-
-  #root {
-    overflow-y: scroll;
+  .topnav {
+    font-size: 0.5em;
   }
 
   @keyframes sidenavOpenAnimation {

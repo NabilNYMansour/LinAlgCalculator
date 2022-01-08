@@ -1,23 +1,7 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Matrix } from "./matrix";
 
 export const Calculator = () => {
-  // const [m1vals, setM1Vals] = useState<string[][]>([]);
-  // const [m1m, setM1M] = useState<number>(14);
-  // const [m1mString, setM1MString] = useState<string>("14");
-  // const [m1n, setM1N] = useState<number>(14);
-  // const [m1nString, setM1NString] = useState<string>("14");
-
-  // const [m2vals, setM2Vals] = useState<string[][]>([]);
-  // const [m2m, setM2M] = useState<number>(14);
-  // const [m2mString, setM2MString] = useState<string>("14");
-  // const [m2n, setM2N] = useState<number>(14);
-  // const [m2nString, setM2NString] = useState<string>("14");
-
-  // const [m3vals, setM3Vals] = useState<string[][]>([]);
-  // const [m3m, setM3M] = useState<number>(14);
-  // const [m3n, setM3N] = useState<number>(14);
-
   const [m1vals, setM1Vals] = useState<string[][]>([]);
   const [m1m, setM1M] = useState<number>(4);
   const [m1mString, setM1MString] = useState<string>("4");
@@ -34,17 +18,18 @@ export const Calculator = () => {
   const [m3m, setM3M] = useState<number>(4);
   const [m3n, setM3N] = useState<number>(4);
 
-  const updateM1Vals = (newVals: string[][]) => {
+  const updateM1Vals = useCallback((newVals: string[][]) => {
     setM1Vals(newVals);
-  };
+  }, [m1vals, setM1Vals]);
 
-  const updateM2Vals = (newVals: string[][]) => {
+  const updateM2Vals = useCallback(
+   (newVals: string[][]) => {
     setM2Vals(newVals);
-  };
+  }, [m2vals, setM2Vals]);
 
-  const updateM3Vals = (newVals: string[][]) => {
+  const updateM3Vals = useCallback((newVals: string[][]) => {
     setM3Vals(newVals);
-  };
+  }, [m3vals, setM3Vals]);
 
   useEffect(() => {}, [m1m, m1n]);
 
@@ -119,6 +104,7 @@ export const Calculator = () => {
             flexDirection: "column",
             justifyContent: "space-around",
             alignItems: "center",
+            padding: "100px",
           }}
         >
           OP
@@ -174,7 +160,7 @@ export const Calculator = () => {
           />
         </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ paddingTop: "50px", display: "flex", flexDirection: "column" }}>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button>Calculate</button>
         </div>
