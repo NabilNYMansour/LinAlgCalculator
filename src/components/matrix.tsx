@@ -60,7 +60,7 @@ export const Matrix = ({
     let max = 4;
     vals.forEach((item) => {
       item.forEach((num, index) => {
-        if (index == columnNum && max < num.toString().length)
+        if (index === columnNum && max < num.toString().length)
           max = num.toString().length > 20 ? 20 : num.toString().length;
       });
     });
