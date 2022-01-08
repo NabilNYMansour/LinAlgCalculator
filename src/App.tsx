@@ -1,5 +1,5 @@
 import { useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { Calculator } from "./components/calculator";
 
@@ -7,10 +7,13 @@ function App() {
   const [opnavHide, setOpnavHide] = useState<boolean>(true);
   const [historynavHide, setHistorynavHide] = useState<boolean>(true);
   const isPhone = useMediaQuery("(max-width: 600px)");
+  const topnavRef = useRef<HTMLDivElement>(null);
+  const [topnavRefHeight, setTopnavRefHeight] = useState<number>(32);
 
   useEffect(() => {
     isPhone && opnavHide && historynavHide && setHistorynavHide(false);
-  }, [isPhone, opnavHide, historynavHide]);
+    topnavRef.current && setTopnavRefHeight(topnavRef.current.clientHeight);
+  }, [isPhone, opnavHide, historynavHide, topnavRef]);
 
   return (
     <div
@@ -33,12 +36,19 @@ function App() {
               ? "sidenavOpenAnimation"
               : "sidenavCloseAnimation",
             flexShrink: "0",
+            minHeight: "calc(100vh - " + topnavRefHeight + "px)",
+            top: topnavRefHeight + "px",
           }}
           className="opnav"
         >
           Longest possible word 1
         </div>
-        <div className="calculator">
+        <div
+          style={{
+            marginTop: topnavRefHeight + "px",
+          }}
+          className="calculator"
+        >
           <div style={{ flexGrow: "1" }}>
             <Calculator />
           </div>
@@ -49,6 +59,8 @@ function App() {
             animationName: historynavHide
               ? "sidenavOpenAnimation"
               : "sidenavCloseAnimation",
+              minHeight: "calc(100vh - " + topnavRefHeight + "px)",
+              top: topnavRefHeight + "px",
           }}
           className="historynav"
         >
@@ -65,6 +77,7 @@ function App() {
           alignItems: "center",
           fontSize: isPhone ? "0.75em" : "1.5em",
         }}
+        ref={topnavRef}
         className="topnav"
       >
         <button
@@ -75,9 +88,9 @@ function App() {
           }}
         >
           <div>
-            <div className={opnavHide ? "change1" : "bar"}></div>
-            <div className={opnavHide ? "change2" : "bar"}></div>
-            <div className={opnavHide ? "change3" : "bar"}></div>
+            <div className={opnavHide ? "change1" : "bar"} />
+            <div className={opnavHide ? "change2" : "bar"} />
+            <div className={opnavHide ? "change3" : "bar"} />
           </div>
           <div style={{ paddingLeft: "10px" }}>Select OP</div>
         </button>
@@ -93,9 +106,9 @@ function App() {
         >
           <div style={{ paddingRight: "10px" }}>History</div>
           <div>
-            <div className={historynavHide ? "change1" : "bar"}/>
-            <div className={historynavHide ? "change2" : "bar"}/>
-            <div className={historynavHide ? "change3" : "bar"}/>
+            <div className={historynavHide ? "change1" : "bar"} />
+            <div className={historynavHide ? "change2" : "bar"} />
+            <div className={historynavHide ? "change3" : "bar"} />
           </div>
         </button>
       </div>

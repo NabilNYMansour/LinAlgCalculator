@@ -28,23 +28,23 @@ input[type="number"] {
 
 .opnav {
   background-color: #11270b;
-  min-height: calc(100vh - 32px);
+  /* min-height: calc(100vh - 32px); */
   overflow-x: hidden;
   animation-duration: 0.5s;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  top: 32px;
+  /* top: 32px; */
   position: fixed;
 }
 
 .historynav {
   background-color: #11270b;
-  min-height: calc(100vh - 32px);
+  /* min-height: calc(100vh - 32px); */
   overflow-x: hidden;
   animation-duration: 0.5s;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  top: 32px;
+  /* top: 32px; */
   position: fixed;
   right: 0;
 }
@@ -55,7 +55,6 @@ input[type="number"] {
 }
 
 .calculator {
-  margin-top: 32px;
   flex-grow: 1;
   display: flex;
   justify-content: center;
@@ -67,10 +66,6 @@ input {
   font-family: "Courier New", Courier, monospace;
   background-color: #669D31;
   border:none;
-  font-size: 1em;
-}
-
-input {
   font-size: 1em;
   color: #11270B;
 }
