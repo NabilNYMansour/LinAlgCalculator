@@ -18,24 +18,32 @@ export const Calculator = () => {
   const [m3m, setM3M] = useState<number>(4);
   const [m3n, setM3N] = useState<number>(4);
 
-  const updateM1Vals = useCallback((newVals: string[][]) => {
-    setM1Vals(newVals);
-  }, [m1vals, setM1Vals]);
+  const updateM1Vals = useCallback(
+    (newVals: string[][]) => {
+      setM1Vals(newVals);
+    },
+    [m1vals, setM1Vals]
+  );
 
   const updateM2Vals = useCallback(
-   (newVals: string[][]) => {
-    setM2Vals(newVals);
-  }, [m2vals, setM2Vals]);
+    (newVals: string[][]) => {
+      setM2Vals(newVals);
+    },
+    [m2vals, setM2Vals]
+  );
 
-  const updateM3Vals = useCallback((newVals: string[][]) => {
-    setM3Vals(newVals);
-  }, [m3vals, setM3Vals]);
+  const updateM3Vals = useCallback(
+    (newVals: string[][]) => {
+      setM3Vals(newVals);
+    },
+    [m3vals, setM3Vals]
+  );
 
   useEffect(() => {}, [m1m, m1n]);
 
   return (
-    <div id="test" style={{ display: "flex", flexDirection: "column",}}>
-      <div 
+    <div id="test" style={{ display: "flex", flexDirection: "column" }}>
+      <div
         style={{
           display: "flex",
           flexDirection: "row",
@@ -73,7 +81,16 @@ export const Calculator = () => {
                     setM1M(Number(event.target.value));
                 }}
               />
-              by
+              <div
+                style={{
+                  width: "4ch",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                by
+              </div>
               <input
                 style={{ width: m1n.toString().length + "ch" }}
                 value={m1nString}
@@ -136,7 +153,16 @@ export const Calculator = () => {
                     setM2M(Number(event.target.value));
                 }}
               />
-              by
+              <div
+                style={{
+                  width: "4ch",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                by
+              </div>
               <input
                 style={{ width: m2n.toString().length + "ch" }}
                 value={m2nString}
@@ -160,7 +186,9 @@ export const Calculator = () => {
           />
         </div>
       </div>
-      <div style={{ paddingTop: "50px", display: "flex", flexDirection: "column" }}>
+      <div
+        style={{ paddingTop: "50px", display: "flex", flexDirection: "column" }}
+      >
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button>Calculate</button>
         </div>

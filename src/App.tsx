@@ -95,7 +95,7 @@ function App() {
           <div style={{ paddingLeft: "10px" }}>Select OP</div>
         </button>
         <div>
-          {isPhone ? "Lin Alg Calculator" : "Linear Algebra Calculator"}{" "}
+          {isPhone ? "" : "Linear Algebra Calculator"}{" "}
         </div>
         <button
           className="topnavbutton"
