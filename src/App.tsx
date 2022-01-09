@@ -26,6 +26,16 @@ function App() {
     >
       <div
         style={{
+          marginTop: topnavRefHeight + "px",
+        }}
+        className="calculator"
+      >
+        <div style={{ flexGrow: "1" }}>
+          <Calculator />
+        </div>
+      </div>
+      <div
+        style={{
           display: "flex",
           flexDirection: "row",
         }}
@@ -45,22 +55,12 @@ function App() {
         </div>
         <div
           style={{
-            marginTop: topnavRefHeight + "px",
-          }}
-          className="calculator"
-        >
-          <div style={{ flexGrow: "1" }}>
-            <Calculator />
-          </div>
-        </div>
-        <div
-          style={{
             overflowY: "hidden",
             animationName: historynavHide
               ? "sidenavOpenAnimation"
               : "sidenavCloseAnimation",
-              minHeight: "calc(100vh - " + topnavRefHeight + "px)",
-              top: topnavRefHeight + "px",
+            minHeight: "calc(100vh - " + topnavRefHeight + "px)",
+            top: topnavRefHeight + "px",
           }}
           className="historynav"
         >
