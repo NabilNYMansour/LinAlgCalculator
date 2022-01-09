@@ -13,13 +13,7 @@ function App() {
   useEffect(() => {
     isPhone && opnavHide && historynavHide && setHistorynavHide(false);
     topnavRef.current && setTopnavRefHeight(topnavRef.current.clientHeight);
-  }, [
-    isPhone,
-    opnavHide,
-    historynavHide,
-    topnavRef,
-    window.screen.orientation.type,
-  ]);
+  }, [isPhone, opnavHide, historynavHide, topnavRef]);
 
   return (
     <div
