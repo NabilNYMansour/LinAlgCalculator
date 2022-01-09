@@ -13,7 +13,13 @@ function App() {
   useEffect(() => {
     isPhone && opnavHide && historynavHide && setHistorynavHide(false);
     topnavRef.current && setTopnavRefHeight(topnavRef.current.clientHeight);
-  }, [isPhone, opnavHide, historynavHide, topnavRef]);
+  }, [
+    isPhone,
+    opnavHide,
+    historynavHide,
+    topnavRef,
+    window.screen.orientation.type,
+  ]);
 
   return (
     <div
@@ -94,9 +100,7 @@ function App() {
           </div>
           <div style={{ paddingLeft: "10px" }}>Select OP</div>
         </button>
-        <div>
-          {isPhone ? "" : "Linear Algebra Calculator"}{" "}
-        </div>
+        <div>{isPhone ? "" : "Linear Algebra Calculator"}</div>
         <button
           className="topnavbutton"
           onClick={() => {

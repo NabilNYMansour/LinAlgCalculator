@@ -106,7 +106,7 @@ export const Matrix = ({
       updateColumns(numColumns);
       updateRows(numRows);
     }
-  }, [numRows, updateRows, updateVals, numColumns, updateColumns]);
+  }, [rows, updateRows, updateVals, columns, updateColumns]);
 
   const maxWidthColumns = vals.length
     ? vals[0].map((_, j) => getMaxNumLength(j))
