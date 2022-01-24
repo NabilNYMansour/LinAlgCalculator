@@ -39,7 +39,7 @@ export const Calculator = () => {
     [m3vals, setM3Vals]
   );
 
-  useEffect(() => {}, [m1m, m1n]);
+  // useEffect(() => {}, [m1m, m1n]);
 
   return (
     <div id="test" style={{ display: "flex", flexDirection: "column" }}>

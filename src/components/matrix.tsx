@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
 export const Matrix = ({
   numRows,
@@ -21,17 +21,13 @@ export const Matrix = ({
 
   const [fillChar, setFillChar] = useState<string>("0");
 
-  const updateRows = (newRows: number) => {
+  const updateRows = useCallback((newRows: number) => {
     setRows(newRows);
-  };
+  }, [setRows]);
 
-  const updateColumns = (newColumns: number) => {
+  const updateColumns = useCallback((newColumns: number) => {
     setColumns(newColumns);
-  };
-
-  // const updateVals = (newVals: string[][]) => {
-  //   setVals(newVals);
-  // };
+  }, [setColumns]);
 
   const changeItem = (
     newItem: string,
