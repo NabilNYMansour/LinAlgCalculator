@@ -133,13 +133,13 @@ input:disabled, button:disabled {
     width: 0%;
   }
   to {
-    width: 25%;
+    width: 15em;
   }
 }
 
 @keyframes sidenavCloseAnimation {
   from {
-    width: 25%;
+    width: 15em;
   }
   to {
     width: 0%;
