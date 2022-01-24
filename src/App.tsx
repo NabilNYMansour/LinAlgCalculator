@@ -2,6 +2,7 @@ import { useMediaQuery } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { Calculator } from "./components/calculator";
+import {test} from "./lin-alg-js-lib/LinAlg"
 
 function App() {
   const [opnavHide, setOpnavHide] = useState<boolean>(true);
@@ -11,6 +12,8 @@ function App() {
   const [topnavRefHeight, setTopnavRefHeight] = useState<number>(32);
 
   useEffect(() => {
+    test();
+    
     isPhone && opnavHide && historynavHide && setHistorynavHide(false);
     topnavRef.current && setTopnavRefHeight(topnavRef.current.clientHeight);
   }, [isPhone, opnavHide, historynavHide, topnavRef]);
