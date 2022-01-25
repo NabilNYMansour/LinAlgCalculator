@@ -115,6 +115,9 @@ export const diagonalOf = (mat: number[][]) => {
   return res;
 };
 
+export const colVof = (mat: number[][], colNum: number) =>
+  transposeOf(mat)[colNum];
+
 enum Triangular {
   Upper,
   Lower,
@@ -225,6 +228,12 @@ export const rowOperationR = (
     return mat.map((row, i) =>
       i === rowNum ? row.map((item, j) => item - mat[otherRowNum][j]) : row
     );
+  } else if (op === "s") {
+    // switch
+    let res = mat.slice();
+    res[rowNum] = mat[otherRowNum];
+    res[otherRowNum] = mat[rowNum];
+    return res;
   }
 };
 
@@ -250,7 +259,205 @@ export const rowOperationRS = (
   }
 };
 
-// Get rank is next
+export const rankOf = (mat: number[][]) => {
+  let rank = 0;
+  for (let i = 0; i < mat.length; ++i) {
+    if (leadingOf(mat, i)) {
+      ++rank;
+    }
+  }
+  return rank;
+};
+
+export const nullityOf = (mat: number[][]) => {
+  return mat[0].length - rankOf(mat);
+};
+
+export const minorMatrixOf = (mat: number[][], row: number, col: number) => {
+  let res: number[][] = new Array(mat.length - 1);
+
+  for (let i = 0; i < mat.length - 1; i++) {
+    res[i] = new Array(mat[0].length - 1);
+  }
+  let rowCount = 0;
+  let colCount = 0;
+  for (let i = 0; i < mat.length; i++) {
+    colCount = 0;
+    for (let j = 0; j < mat[0].length; j++) {
+      if (i !== row && j !== col) {
+        res[rowCount][colCount] = mat[i][j];
+        ++colCount;
+      }
+    }
+    if (i !== row) {
+      ++rowCount;
+    }
+  }
+  return res;
+};
+
+export const minorOf = (mat: number[][], row: number, col: number) => {
+  return determinantOf(minorMatrixOf(mat, row, col));
+};
+
+export const determinantOf = (mat: number[][]) => {
+  if (mat.length === 2) {
+    return mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0];
+  } else if (triangularOf(mat) !== Triangular.Not) {
+    let diag = diagonalOf(mat);
+    let result = 1;
+    for (let i = 0; i < mat[0].length; ++i) {
+      result *= diag[i];
+    }
+    return result;
+  } else {
+    let minSum = 0;
+    let sum = 0;
+    let minRow = 0;
+    let minCol = 0;
+    let checkRows = true;
+    // Checking rows:
+    for (let i = 0; i < mat.length; ++i) {
+      sum = 0;
+      if (i === 0) {
+        for (let j = 0; j < mat[0].length; ++j) {
+          minSum += mat[i][j];
+        }
+      } else {
+        for (let j = 0; j < mat[0].length; ++j) {
+          sum += mat[i][j];
+        }
+        if (sum < minSum) {
+          minSum = sum;
+          minRow = i;
+        }
+      }
+    }
+    // Checking cols:
+    for (let j = 0; j < mat[0].length; ++j) {
+      sum = 0;
+      for (let i = 0; i < mat.length; ++i) {
+        sum += mat[i][j];
+      }
+      if (sum < minSum) {
+        minSum = sum;
+        minCol = j;
+        checkRows = false;
+      }
+    }
+    // Finding result:
+    let result = 0;
+    if (checkRows) {
+      let signCheck = minRow % 2;
+      for (let j = 0; j < mat[0].length; ++j) {
+        if (j % 2 === signCheck) {
+          result += mat[minRow][j] * minorOf(mat, minRow, j);
+        } else {
+          result -= mat[minRow][j] * minorOf(mat, minRow, j);
+        }
+      }
+    } else {
+      let signCheck = minCol % 2;
+      for (let i = 0; i < mat.length; ++i) {
+        if (i % 2 === signCheck) {
+          result += mat[i][minCol] * minorOf(mat, i, minCol);
+        } else {
+          result -= mat[i][minCol] * minorOf(mat, i, minCol);
+        }
+      }
+    }
+    return result;
+  }
+};
+
+export const adjugateOf = (mat: number[][]) => {
+  return transposeOf(
+    mat.map((row, i) => {
+      return row.map((_, j) =>
+        (i + j) % 2 === 0 ? minorOf(mat, i, j) : -minorOf(mat, i, j)
+      );
+    })
+  );
+};
+
+export const inverseOf = (mat: number[][]) =>
+  scalarMulM(adjugateOf(mat), 1 / determinantOf(mat));
+
+export const maxOf = (mat: number[][]) => Math.max(...mat.flat());
+
+export const minOf = (mat: number[][]) => Math.min(...mat.flat());
+
+export const orderMatrix = (mat: number[][]) => {
+  let brokeLoop;
+  let res: number[][] = mat;
+  for (let i = 0; i < mat.length; ++i) {
+    brokeLoop = false;
+    for (let j = 0; j < mat[0].length; ++j) {
+      if (mat[i][j] == 0) {
+        for (let k = i; k < mat.length; ++k) {
+          if (mat[k][j] !== 0) {
+            res = rowOperationR(mat, i, k, "s") as number[][];
+            brokeLoop = true;
+            break;
+          }
+        }
+      } else {
+        break;
+      }
+      if (brokeLoop) {
+        break;
+      }
+    }
+  }
+  return res;
+};
+
+// From https://rosettacode.org/wiki/Reduced_row_echelon_form#JavaScript
+export const reducedRowEchelonFormOf = (matrix: number[][]) => {
+  let mat = matrix.slice();
+  let lead = 0;
+  for (let r = 0; r < mat.length; r++) {
+    if (mat[0].length <= lead) {
+      return mat.map((row) =>
+        row.map((col) => (col === 0 ? Number(String(col)) : col))
+      );
+    }
+    let i = r;
+    while (mat[i][lead] == 0) {
+      i++;
+      if (mat.length == i) {
+        i = r;
+        lead++;
+        if (mat[0].length == lead) {
+          return mat.map((row) =>
+            row.map((col) => (col === 0 ? Number(String(col)) : col))
+          );
+        }
+      }
+    }
+
+    let tmp = mat[i];
+    mat[i] = mat[r];
+    mat[r] = tmp;
+
+    let val = mat[r][lead];
+    for (let j = 0; j < mat[0].length; j++) {
+      mat[r][j] /= val;
+    }
+
+    for (let i = 0; i < mat.length; i++) {
+      if (i == r) continue;
+      val = mat[i][lead];
+      for (let j = 0; j < mat[0].length; j++) {
+        mat[i][j] -= val * mat[r][j];
+      }
+    }
+    lead++;
+  }
+  return mat.map((row) =>
+    row.map((col) => (col === 0 ? Number(String(col)) : col))
+  );
+};
 
 export const test = () => {
   console.clear();
@@ -342,40 +549,71 @@ export const test = () => {
   //       0
   //     )
   //   );
+  // console.log(
+  //   rowOperationS(
+  //     [
+  //       [1, 2, 3, 4, 5],
+  //       [6, 7, 8, 9, 10],
+  //       [11, 12, 13, 14, 15],
+  //     ],
+  //     5,
+  //     2
+  //   )
+  // );
+  // console.log(
+  //   rowOperationR(
+  //     [
+  //       [1, 2, 3, 4, 5],
+  //       [6, 7, 8, 9, 10],
+  //       [11, 12, 13, 14, 15],
+  //     ],
+  //     0,
+  //     1,
+  //     "-"
+  //   )
+  // );
+  // console.log(
+  //   rowOperationRS(
+  //     [
+  //       [1, 2, 3, 4, 5],
+  //       [6, 7, 8, 9, 10],
+  //       [11, 12, 13, 14, 15],
+  //     ],
+  //     1,
+  //     0,
+  //     1,
+  //     "-"
+  //   )
+  // );
+  // console.log(
+  //   rankOf([
+  //     [5, 2],
+  //     [0, 0],
+  //   ])
+  // );
+  // console.log(
+  //   minorMatrixOf(
+  //     [
+  //       [5, 2, 1],
+  //       [0, 0, 33],
+  //       [12, 3, 6],
+  //     ],
+  //     1,
+  //     1
+  //   )
+  // );
+  // console.log(
+  //   adjugateOf([
+  //     [3, 1, -6],
+  //     [5, 2, -1],
+  //     [-4, 3, 0],
+  //   ])
+  // );
   console.log(
-    rowOperationS(
-      [
-        [1, 2, 3, 4, 5],
-        [6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15],
-      ],
-      5,
-      2
-    )
-  );
-  console.log(
-    rowOperationR(
-      [
-        [1, 2, 3, 4, 5],
-        [6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15],
-      ],
-      0,
-      1,
-      "-"
-    )
-  );
-  console.log(
-    rowOperationRS(
-      [
-        [1, 2, 3, 4, 5],
-        [6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15],
-      ],
-      5,
-      0,
-      1,
-      "-"
-    )
+    reducedRowEchelonFormOf([
+      [-3, -9, 13],
+      [-4, -12, 17],
+      [1, 3, -4],
+    ])
   );
 };
