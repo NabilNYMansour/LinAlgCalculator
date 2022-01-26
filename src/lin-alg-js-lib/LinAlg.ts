@@ -59,7 +59,7 @@ export const addM = (mat1: number[][], mat2: number[][]) => {
 };
 
 export const subM = (mat1: number[][], mat2: number[][]) => {
-  return mat1.map((row, i) => row.map((item, j) => item + mat2[i][j]));
+  return mat1.map((row, i) => row.map((item, j) => item - mat2[i][j]));
 };
 
 export const straightMulM = (mat1: number[][], mat2: number[][]) => {
@@ -509,16 +509,17 @@ export const test = () => {
   //       [7, 8, 9, 4],
   //     ])
   //   );
-  //   console.log(
-  //     multiplyMM([
-  //       [0, 4, -2],
-  //       [-4, -3, 0],
-  //     ], [
-  //         [0, 1],
-  //         [1, -1],
-  //         [2, 3],
-  //       ])
-  //   );
+    console.log(
+      multiplyMM([
+        [12, 18, -19],
+        [33, 45, 90],
+        [-7, 43, 33],
+      ], [
+          [66, -90, -23],
+          [12, 44, 91],
+          [92, 11, 2],
+        ])
+    );
   //   console.log(
   //     powerOf(
   //       [
@@ -609,11 +610,11 @@ export const test = () => {
   //     [-4, 3, 0],
   //   ])
   // );
-  console.log(
-    reducedRowEchelonFormOf([
-      [-3, -9, 13],
-      [-4, -12, 17],
-      [1, 3, -4],
-    ])
-  );
+//   console.log(
+//     reducedRowEchelonFormOf([
+//       [-3, -9, 13],
+//       [-4, -12, 17],
+//       [1, 3, -4],
+//     ])
+//   );
 };

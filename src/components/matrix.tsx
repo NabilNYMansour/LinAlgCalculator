@@ -7,6 +7,14 @@ export const Matrix = ({
   isDisabled,
   vals,
   updateVals,
+  m,
+  n,
+  mString,
+  nString,
+  setM,
+  setN,
+  setMString,
+  setNString,
 }: {
   numRows: number;
   numColumns: number;
@@ -14,6 +22,14 @@ export const Matrix = ({
   isDisabled: boolean;
   vals: string[][];
   updateVals: (newVals: string[][]) => void;
+  m: number;
+  n: number;
+  mString: string;
+  nString: string;
+  setM: (newVal: number) => void;
+  setN: (newVal: number) => void;
+  setMString: (newVal: string) => void;
+  setNString: (newVal: string) => void;
 }) => {
   const [rows, setRows] = useState<number>(0);
   const [columns, setColumns] = useState<number>(0);
@@ -21,13 +37,19 @@ export const Matrix = ({
 
   const [fillChar, setFillChar] = useState<string>("0");
 
-  const updateRows = useCallback((newRows: number) => {
-    setRows(newRows);
-  }, [setRows]);
+  const updateRows = useCallback(
+    (newRows: number) => {
+      setRows(newRows);
+    },
+    [setRows]
+  );
 
-  const updateColumns = useCallback((newColumns: number) => {
-    setColumns(newColumns);
-  }, [setColumns]);
+  const updateColumns = useCallback(
+    (newColumns: number) => {
+      setColumns(newColumns);
+    },
+    [setColumns]
+  );
 
   const changeItem = (
     newItem: string,
@@ -102,35 +124,100 @@ export const Matrix = ({
       updateColumns(numColumns);
       updateRows(numRows);
     }
-  }, [rows, updateRows, updateVals, columns, updateColumns]);
+  }, [
+    rows,
+    updateRows,
+    updateVals,
+    columns,
+    updateColumns,
+    numRows,
+    numColumns,
+  ]);
 
   const maxWidthColumns = vals.length
     ? vals[0].map((_, j) => getMaxNumLength(j))
     : [];
 
   return (
-    <div style={{ padding: "10px" }}>
-      <div style={{ padding: "5px" }}>
-        {vals.map((item, i) => (
-          <div style={{ display: "flex", justifyContent: "center" }} key={i}>
-            {item.map((num, j) => (
-              <span key={j}>
-                <input
-                  style={{
-                    maxWidth: maxWidthColumns[j] + "ch",
-                    margin: "1px",
-                  }}
-                  value={num}
-                  type="text"
-                  disabled={!isInput || isDisabled}
-                  onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                    changeItem(event.target.value, i, j);
-                  }}
-                ></input>
-              </span>
-            ))}
+    <div>
+      <div
+        style={{
+          padding: "10px",
+          maxWidth: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <div // m by n
+          style={{
+            width: "75px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignSelf: "center",
+          }}
+        >
+          <input
+            style={{ width: m.toString().length + "ch" }}
+            value={mString}
+            type="number"
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              event.target.value.length < 3 &&
+                Number(event.target.value) < 15 &&
+                setMString(event.target.value);
+              Number(event.target.value) < 15 &&
+                Number(event.target.value) > 0 &&
+                setM(Number(event.target.value));
+            }}
+          />
+          <div
+            style={{
+              width: "4ch",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            by
           </div>
-        ))}
+          <input
+            style={{ width: n.toString().length + "ch" }}
+            value={nString}
+            type="number"
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              event.target.value.length < 3 &&
+                Number(event.target.value) < 15 &&
+                setNString(event.target.value);
+              Number(event.target.value) < 15 &&
+                Number(event.target.value) > 0 &&
+                setN(Number(event.target.value));
+            }}
+          />
+        </div>
+        <div // Matrix generator
+          style={{ padding: "5px" }} 
+        >
+          {vals.map((item, i) => (
+            <div style={{ display: "flex" }} key={i}>
+              {item.map((num, j) => (
+                <div style={{ flexWrap: "wrap", justifyContent:"center" }} key={j}>
+                  <input
+                    style={{
+                      maxWidth: maxWidthColumns[j] + "ch",
+                      margin: "1px",
+                    }}
+                    value={num}
+                    type="text"
+                    disabled={!isInput || isDisabled}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                      changeItem(event.target.value, i, j);
+                    }}
+                  ></input>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
       {isInput && (
         <button
@@ -157,7 +244,7 @@ export const Matrix = ({
       {isInput && (
         <div>
           <button
-          style={{ marginRight: "2px" }}
+            style={{ marginRight: "2px" }}
             disabled={isDisabled}
             onClick={() => {
               fillEmpty(fillChar);

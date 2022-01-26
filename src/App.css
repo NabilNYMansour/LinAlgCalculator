@@ -5,14 +5,14 @@ body,
 #app > div {
   height: 100%;
   overflow-y: hidden;
-  background-color: #3c5a14;
+  background-color: #dad7cd;
 }
 
 #root {
   overflow-y: auto;
   height: 100%;
   font-family: "Courier New", Courier, monospace;
-  color: #71B340;
+  color: #71b340;
 }
 
 input::-webkit-outer-spin-button,
@@ -54,28 +54,30 @@ input[type="number"] {
   width: 100vw;
 }
 
-.calculator {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  /* align-items: center; */
-}
-
 button,
 input {
   font-family: "Courier New", Courier, monospace;
-  background-color: #669D31;
-  border:none;
+  background-color: #669d31;
+  border: none;
   font-size: 1em;
-  color: #11270B;
+  color: #11270b;
 }
 
-input:hover, button:hover {
-  background-color: #71B340;
+input:hover,
+button:hover {
+  background-color: #71b340;
 }
 
-input:disabled, button:disabled {
-  background-color: #598B2C;
+input:disabled,
+button:disabled {
+  background-color: #598b2c;
+}
+
+.op-button {
+  margin: 10px;
+  margin-bottom: 0px;
+  border-style: solid;
+  border-color: #11270b;
 }
 
 .bar {
@@ -126,6 +128,34 @@ input:disabled, button:disabled {
 
 .topnavbutton:hover {
   background-color: #669d31;
+}
+
+.subbar {
+  width: 20px;
+  height: 2px;
+  background-color: #71b340;
+}
+
+.addbar1 {
+  width: 20px;
+  height: 2px;
+  background-color: #71b340;
+}
+
+.addbar2 {
+  width: 2px;
+  height: 20px;
+  -webkit-transform: translate(9px, -11x);
+  transform: translate(9px, -11px);
+  background-color: #71b340;
+}
+
+.addbar {
+  transform: translate(0px, 3px);
+}
+
+.mulbar {
+  transform: translate(-7px, 0px) rotate(45deg);
 }
 
 @keyframes sidenavOpenAnimation {

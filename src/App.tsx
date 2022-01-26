@@ -1,22 +1,29 @@
 import { useMediaQuery } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./App.css";
 import { Calculator } from "./components/calculator";
-import {test} from "./lin-alg-js-lib/LinAlg"
+import { OP } from "./enums";
+import { test } from "./lin-alg-js-lib/LinAlg";
+
+
 
 function App() {
-  const [opnavHide, setOpnavHide] = useState<boolean>(true);
-  const [historynavHide, setHistorynavHide] = useState<boolean>(true);
+  const [opnavHide, setOpnavHide] = useState<boolean>(false);
+  const [historynavHide, setHistorynavHide] = useState<boolean>(false);
   const isPhone = useMediaQuery("(max-width: 600px)");
   const topnavRef = useRef<HTMLDivElement>(null);
   const [topnavRefHeight, setTopnavRefHeight] = useState<number>(32);
+  const [selectedOp, setSelectedOp] = useState<OP>(OP.Add);
 
   useEffect(() => {
-    test();
-    
     isPhone && opnavHide && historynavHide && setHistorynavHide(false);
     topnavRef.current && setTopnavRefHeight(topnavRef.current.clientHeight);
   }, [isPhone, opnavHide, historynavHide, topnavRef]);
+
+  const getHighlight = useCallback(
+    (operation: OP) => (selectedOp === operation ? "#8df042" : "#669D31"),
+    [selectedOp]
+  );
 
   return (
     <div
@@ -31,10 +38,9 @@ function App() {
         style={{
           marginTop: topnavRefHeight + "px",
         }}
-        className="calculator"
       >
         <div style={{ flexGrow: "1" }}>
-          <Calculator />
+          <Calculator selectedOp={selectedOp} />
         </div>
       </div>
       <div
@@ -54,8 +60,33 @@ function App() {
           }}
           className="opnav"
         >
-          Longest possible word 1
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <button
+              onClick={() => setSelectedOp(OP.Add)}
+              style={{ borderColor: getHighlight(OP.Add) }}
+              className="op-button"
+            >
+              Add
+            </button>
+            <button
+              onClick={() => setSelectedOp(OP.Sub)}
+              style={{ borderColor: getHighlight(OP.Sub) }}
+              className="op-button"
+            >
+              Sub
+            </button>
+            <button
+              onClick={() => setSelectedOp(OP.Multiply)}
+              style={{
+                borderColor: getHighlight(OP.Multiply),
+              }}
+              className="op-button"
+            >
+              Multiply
+            </button>
+          </div>
         </div>
+
         <div
           style={{
             overflowY: "hidden",
