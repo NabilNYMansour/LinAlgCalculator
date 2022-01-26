@@ -5,14 +5,14 @@ body,
 #app > div {
   height: 100%;
   overflow-y: hidden;
-  background-color: #dad7cd;
+  background-color: #FEFAE0;
 }
 
 #root {
   overflow-y: auto;
   height: 100%;
   font-family: "Courier New", Courier, monospace;
-  color: #71b340;
+  color: #606C38;
 }
 
 input::-webkit-outer-spin-button,
@@ -27,7 +27,7 @@ input[type="number"] {
 }
 
 .opnav {
-  background-color: #11270b;
+  background-color: #283618;
   /* min-height: calc(100vh - 32px); */
   overflow-x: hidden;
   animation-duration: 0.5s;
@@ -38,7 +38,7 @@ input[type="number"] {
 }
 
 .historynav {
-  background-color: #11270b;
+  background-color: #283618;
   /* min-height: calc(100vh - 32px); */
   overflow-x: hidden;
   animation-duration: 0.5s;
@@ -52,32 +52,39 @@ input[type="number"] {
 .topnav {
   position: fixed;
   width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #283618;
+  background-color: #DDA15E;
+  align-items: center;
 }
 
 button,
 input {
   font-family: "Courier New", Courier, monospace;
-  background-color: #669d31;
+  background-color: #DDA15E;
   border: none;
   font-size: 1em;
   color: #11270b;
+  border-radius: 4px;
 }
 
 input:hover,
 button:hover {
-  background-color: #71b340;
+  background-color: #DDA15E;
 }
 
 input:disabled,
 button:disabled {
-  background-color: #598b2c;
+  background-color: #BC6C25;
 }
 
 .op-button {
   margin: 10px;
   margin-bottom: 0px;
   border-style: solid;
-  border-color: #11270b;
+  background-color: #BC6C25;
 }
 
 .bar {
@@ -118,7 +125,7 @@ button:disabled {
 }
 
 .topnavbutton {
-  background-color: #71b340;
+  background-color: #DDA15E;
   display: flex;
   justify-content: "space-between";
   align-items: center;
@@ -127,19 +134,19 @@ button:disabled {
 }
 
 .topnavbutton:hover {
-  background-color: #669d31;
+  background-color: #BC6C25;
 }
 
 .subbar {
   width: 20px;
   height: 2px;
-  background-color: #71b340;
+  background-color: #BC6C25;
 }
 
 .addbar1 {
   width: 20px;
   height: 2px;
-  background-color: #71b340;
+  background-color: #BC6C25;
 }
 
 .addbar2 {
@@ -147,7 +154,7 @@ button:disabled {
   height: 20px;
   -webkit-transform: translate(9px, -11x);
   transform: translate(9px, -11px);
-  background-color: #71b340;
+  background-color: #BC6C25;
 }
 
 .addbar {
@@ -156,6 +163,33 @@ button:disabled {
 
 .mulbar {
   transform: translate(-7px, 0px) rotate(45deg);
+}
+
+.calculator-symbol {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 50px;
+}
+
+.calculator-row {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  margin: 5px;
+}
+
+.calculator-error {
+  display: flex;
+  justify-content: center;
+  color: #ff0033;
+  padding: 10px;
+}
+
+.calculator-button {
+  display: flex;
+  justify-content: center;
 }
 
 @keyframes sidenavOpenAnimation {

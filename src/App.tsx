@@ -3,9 +3,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import "./App.css";
 import { Calculator } from "./components/calculator";
 import { OP } from "./enums";
+import GitHub from "@mui/icons-material/GitHub";
 import { test } from "./lin-alg-js-lib/LinAlg";
-
-
 
 function App() {
   const [opnavHide, setOpnavHide] = useState<boolean>(false);
@@ -21,7 +20,7 @@ function App() {
   }, [isPhone, opnavHide, historynavHide, topnavRef]);
 
   const getHighlight = useCallback(
-    (operation: OP) => (selectedOp === operation ? "#8df042" : "#669D31"),
+    (operation: OP) => (selectedOp === operation ? "#DDA15E" : "#606C38"),
     [selectedOp]
   );
 
@@ -86,10 +85,8 @@ function App() {
             </button>
           </div>
         </div>
-
-        <div
+        {/* <div
           style={{
-            overflowY: "hidden",
             animationName: historynavHide
               ? "sidenavOpenAnimation"
               : "sidenavCloseAnimation",
@@ -99,16 +96,10 @@ function App() {
           className="historynav"
         >
           Longest possible word 2
-        </div>
+        </div> */}
       </div>
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          color: "#11270B",
-          backgroundColor: "#71B340",
-          alignItems: "center",
           fontSize: isPhone ? "0.75em" : "1.5em",
         }}
         ref={topnavRef}
@@ -129,7 +120,7 @@ function App() {
           <div style={{ paddingLeft: "10px" }}>Select OP</div>
         </button>
         <div>{isPhone ? "" : "Linear Algebra Calculator"}</div>
-        <button
+        {/* <button
           className="topnavbutton"
           onClick={() => {
             isPhone && setOpnavHide(false);
@@ -142,7 +133,20 @@ function App() {
             <div className={historynavHide ? "change2" : "bar"} />
             <div className={historynavHide ? "change3" : "bar"} />
           </div>
-        </button>
+        </button> */}
+        <div>
+          <form action="https://github.com/NabilNYMansour/LinAlgCalculator">
+            <a href="https://github.com/NabilNYMansour/LinAlgCalculator">
+              <button
+                type="submit"
+                style={{ paddingRight: "10px" }}
+                className="topnavbutton"
+              >
+                <GitHub fontSize="large" />
+              </button>
+            </a>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -148,7 +148,7 @@ export const Matrix = ({
           flexDirection: "column",
         }}
       >
-        <div // m by n
+        {isInput && <div // m by n
           style={{
             width: "75px",
             display: "flex",
@@ -193,7 +193,7 @@ export const Matrix = ({
                 setN(Number(event.target.value));
             }}
           />
-        </div>
+        </div>}
         <div // Matrix generator
           style={{ padding: "5px" }} 
         >

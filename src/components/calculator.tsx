@@ -2,6 +2,7 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { OP, getOpSymbol, getErrorMsg } from "../enums";
 import { addM, multiplyMM, subM } from "../lin-alg-js-lib/LinAlg";
 import { Matrix } from "./matrix";
+import "../App.css";
 
 export const Calculator = ({ selectedOp }: { selectedOp: OP }) => {
   const [m1vals, setM1Vals] = useState<string[][]>([]);
@@ -87,18 +88,56 @@ export const Calculator = ({ selectedOp }: { selectedOp: OP }) => {
     [m1m, m2m, m1n, m2n]
   );
 
+  const onClickCalculate = useCallback(async () => {
+    console.clear();
+    console.log(selectedOp);
+
+    if (checkError(selectedOp)) {
+      setErrorFound(false);
+      setShowError(false);
+      await setM3Vals(
+        calculate(selectedOp).map((row) => row.map((val) => String(val)))
+      );
+      setM3M(m3vals.length);
+      setM3N(m3vals[0].length);
+    } else {
+      setErrorFound(true);
+      setShowError(true);
+    }
+  }, [
+    calculate,
+    checkError,
+    setErrorFound,
+    setShowError,
+    selectedOp,
+    setM3Vals,
+    m3vals,
+  ]);
+
+  const onClickUseResult = useCallback(() => {
+    setM1Vals(m3vals);
+    setM1M(m3m);
+    setM1N(m3n);
+    setM1MString(m3mString);
+    setM1NString(m3nString);
+  }, [
+    setM1Vals,
+    setM1M,
+    setM1N,
+    setM1MString,
+    setM1NString,
+    m3vals,
+    m3m,
+    m3n,
+    m3mString,
+    m3nString,
+  ]);
+
   return (
     <div>
       <div style={{ display: "flex" }}>
         <div style={{ width: "1px" }}></div>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            flexGrow: "1",
-          }}
-        >
+        <div className="calculator-row">
           <div>
             <Matrix
               numRows={m1m}
@@ -117,16 +156,7 @@ export const Calculator = ({ selectedOp }: { selectedOp: OP }) => {
               setNString={setM1NString}
             />
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-around",
-              padding: "50px",
-            }}
-          >
-            {getOpSymbol(selectedOp)}
-          </div>
+          <div className="calculator-symbol">{getOpSymbol(selectedOp)}</div>
           <div>
             <Matrix
               numRows={m2m}
@@ -150,154 +180,41 @@ export const Calculator = ({ selectedOp }: { selectedOp: OP }) => {
       <div style={{ display: "flex" }}>
         <div style={{ width: "1px" }}></div>
         <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            flexGrow: "1",
-          }}
+          className="calculator-row"
+          style={{ flexDirection: "column", alignItems: "center" }}
         >
-          TEST
+          <div className="calculator-button">
+            <button onClick={onClickCalculate}>Calculate</button>
+          </div>
+          <div>
+            <Matrix
+              numRows={m3m}
+              numColumns={m3n}
+              isInput={false}
+              isDisabled={true}
+              vals={m3vals}
+              updateVals={updateM3Vals}
+              m={m3m}
+              n={m3n}
+              mString={m3mString}
+              nString={m3nString}
+              setM={setM3M}
+              setN={setM3N}
+              setMString={setM3MString}
+              setNString={setM3NString}
+            />
+          </div>
+          <div className="calculator-button">
+            <button disabled={errorFound} onClick={() => onClickUseResult()}>
+              Use Result
+            </button>
+          </div>
+          <div className="calculator-error">
+            {errorFound ? getErrorMsg(selectedOp) + "!" : ""}
+          </div>
+          {errorFound && <button onClick={() => setErrorFound(false)}>Got it</button>}
         </div>
       </div>
     </div>
-    /* <div style={{ display: "flex", flexWrap: "wrap", justifyContent:"center", flexGrow:"1" }}> */
-    // <div>
-    //   <div style={{ display: "flex" }}>
-    //     <div style={{ width: "1px" }}></div>
-    //     <div
-    //       style={{
-    //         display: "flex",
-    //         flexDirection: "row",
-    //         flexWrap: "wrap",
-    //         margin: "10px",
-    //       }}
-    //     >
-    //       <div>
-    //         <Matrix
-    //           numRows={m1m}
-    //           numColumns={m1n}
-    //           isInput={true}
-    //           isDisabled={false}
-    //           vals={m1vals}
-    //           updateVals={updateM1Vals}
-    //           m={m1m}
-    //           n={m1n}
-    //           mString={m1mString}
-    //           nString={m1nString}
-    //           setM={setM1M}
-    //           setN={setM1N}
-    //           setMString={setM1MString}
-    //           setNString={setM1NString}
-    //         />
-    //       </div>
-    //       <div // symbol
-    //         style={{
-    //           display: "flex",
-    //           flexDirection: "column",
-    //           justifyContent: "space-around",
-    //         }}
-    //       >
-    //         {getOpSymbol(selectedOp)}
-    //       </div>
-    //       <div>
-    //         <Matrix
-    //           numRows={m2m}
-    //           numColumns={m2n}
-    //           isInput={true}
-    //           isDisabled={false}
-    //           vals={m2vals}
-    //           updateVals={updateM2Vals}
-    //           m={m2m}
-    //           n={m2n}
-    //           mString={m2mString}
-    //           nString={m2nString}
-    //           setM={setM2M}
-    //           setN={setM2N}
-    //           setMString={setM2MString}
-    //           setNString={setM2NString}
-    //         />
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <div style={{ display: "flex" }}>
-    //   <div style={{ width: "1px" }}></div>
-    //   <div
-    //     style={{
-    //       paddingTop: "50px",
-    //       display: "flex",
-    //       alignContent: "center",
-    //       flexDirection: "column",
-    //     }}
-    //   >
-    //     <div // Calc button
-    //       style={{ display: "flex", justifyContent: "center" }}
-    //     >
-    //       <button
-    //         onClick={() => {
-    //           if (checkError(selectedOp)) {
-    //             setErrorFound(false);
-    //             setShowError(false);
-    //             setM3Vals(
-    //               calculate(selectedOp).map((row) =>
-    //                 row.map((val) => String(val))
-    //               )
-    //             );
-    //             setM3M(m3vals.length);
-    //             setM3N(m3vals[0].length);
-    //           } else {
-    //             setErrorFound(true);
-    //             setShowError(true);
-    //           }
-    //         }}
-    //       >
-    //         Calculate
-    //       </button>
-    //     </div>
-    //     <div style={{ display: "flex", justifyContent: "center" }}>
-    //       <Matrix
-    //         numRows={m3m}
-    //         numColumns={m3n}
-    //         isInput={false}
-    //         isDisabled={true}
-    //         vals={m3vals}
-    //         updateVals={updateM3Vals}
-    //         m={m3m}
-    //         n={m3n}
-    //         mString={m3mString}
-    //         nString={m3nString}
-    //         setM={setM3M}
-    //         setN={setM3N}
-    //         setMString={setM3MString}
-    //         setNString={setM3NString}
-    //       />
-    //     </div>
-    //     <div style={{ display: "flex", justifyContent: "center" }}>
-    //       <button disabled={errorFound} onClick={() => setM1Vals(m3vals)}>
-    //         Use Result
-    //       </button>
-    //     </div>
-    //     <div // Error
-    //       style={{
-    //         display: "flex",
-    //         justifyContent: "center",
-    //         color: "#ff0033",
-    //         padding: "10px",
-    //       }}
-    //     >
-    //       {errorFound && showError ? getErrorMsg(selectedOp) + "!" : ""}
-    //     </div>
-    //     <div // Use Result
-    //       style={{ display: "flex", justifyContent: "center" }}
-    //     >
-    //       {showError ? (
-    //         <button onClick={() => setShowError(false)}>Got it</button>
-    //       ) : (
-    //         ""
-    //       )}
-    //     </div>
-    //   </div>
-    //   </div>
-    // </div>
   );
 };
