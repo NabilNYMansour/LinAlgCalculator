@@ -7,7 +7,7 @@ import GitHub from "@mui/icons-material/GitHub";
 import { test } from "./lin-alg-js-lib/LinAlg";
 
 function App() {
-  const [opnavHide, setOpnavHide] = useState<boolean>(false);
+  const [opnavHide, setOpnavHide] = useState<boolean>(true);
   const [historynavHide, setHistorynavHide] = useState<boolean>(false);
   const isPhone = useMediaQuery("(max-width: 600px)");
   const topnavRef = useRef<HTMLDivElement>(null);

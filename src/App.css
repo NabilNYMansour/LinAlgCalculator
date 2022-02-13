@@ -72,11 +72,13 @@ input {
 
 input:hover,
 button:hover {
-  background-color: #DDA15E;
+  background-color: #ecad65;
 }
 
 input:disabled,
 button:disabled {
+  color: black;
+  opacity: 1;
   background-color: #BC6C25;
 }
 
